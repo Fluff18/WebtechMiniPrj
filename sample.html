@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<?php
+// Initialize the session
+session_start();
+ 
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("location: login.php");
+    exit;
+}
+?>
+
+<head>
+    <title>Game Warrior</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Game Warrior Template">
+    <meta name="keywords" content="warrior, game, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->   
+    <link href="img/favicon.ico" rel="shortcut icon"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="css/owl.carousel.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/animate.css"/>
+
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+        
+
+        obj={
+
+            
+            display: function(){
+
+                var list=["'Destiny 2'", "'Modern Warfare'", "'NFS Payback'", "'Far Cry 5'","'Black Ops 4'","'Warzone'","'Uncharted 4'","'Watch Dogs'","'Spiderman'","'Past Cure'","'God of War'","'Minecraft'","'Fortnite'","'Grand Theft Auto V'","'Most Wanted'","'Rainbow Six'","'Fifa'","'WWE'","'NFL'","'Fifa 19'","'Cricket 2019'","'Dota 2'"];
+                var urls=['https://www.youtube.com/embed/hdWkpbPTpmE','https://www.youtube.com/embed/ZVfeahf5gmY','https://www.youtube.com/embed/K-5EdHZ0hBs','https://www.youtube.com/embed/7KRnOXQswrk','https://www.youtube.com/embed/44j2eXzvzNY','https://www.youtube.com/embed/0E44DClsX5Q','https://www.youtube.com/embed/y1Rx-Bbht5E','https://www.youtube.com/embed/hh9x4NqW0Dw','https://www.youtube.com/embed/q4GdJVvdxss','https://www.youtube.com/embed/e-a6oHBMZBQ','https://www.youtube.com/embed/K0u_kAWLJOA','https://www.youtube.com/embed/MmB9b5njVbA','https://www.youtube.com/embed/2gUtfBmw86Y','https://www.youtube.com/embed/QkkoHAzjnUs','https://www.youtube.com/embed/DEmRkNnCvLU','https://www.youtube.com/embed/KlbLLRdg9u8','https://www.youtube.com/embed/vgQNOIhRsV4','https://www.youtube.com/embed/QwCV-Cuvko0','https://www.youtube.com/embed/hJd2gujCXYk','https://www.youtube.com/embed/zX0AV6yxyrQ'];
+                x = document.getElementById('recommendations').innerText;
+                console.log(x);
+                if(x=='UNAVAILABLE'){
+                    h3=document.createElement('h3');
+                    h3.innerText=x;
+                    document.body.appendChild(h3);
+                    return;
+                }
+                else{
+
+
+                x = x.slice(1);
+                x = x.slice(0, x.length - 1);
+                res = x.split(',');
+                //alert(res);
+                for (var i = res.length - 1; i >= 0; i--) {
+                    res[i]=res[i].trim();
+                    //console.log(res[i]);
+                }
+                //alert(list);
+                for (var i = res.length - 1; i >= 0; i--) {
+
+                        //console.log(res[i]);
+                        if(list.includes(res[i])==true){
+
+                        ind= list.indexOf(res[i]);
+                        console.log(ind);
+                        a=document.getElementById("sub");
+                        col = document.createElement('div');
+                        col.setAttribute('class','col-md-6');
+                        //a.appendChild(col);
+                        rec = document.createElement('div');
+                        rec.setAttribute('class','recent-game-item');
+                        //col.appendChild(rec);
+                        rgi = document.createElement('div');
+                        rgi.setAttribute('class','rgi-thumb set-bg');
+                        //
+
+                        ifr = document.createElement('iframe');
+                        if(ind < urls.length){
+                            ifr.setAttribute('src', urls[ind]);
+                        }
+                        else{
+                            ifr.setAttribute('src', "https://www.youtube.com/embed/edYCtaNueQY");
+                        }
+                        
+                        ifr.setAttribute('width', "300");
+                        ifr.setAttribute('height', "225");
+                        ifr.setAttribute('frameborder', "0");
+                        ifr.setAttribute("picture-in-picture","true");
+
+                        rgi.appendChild(ifr);
+                        rec.appendChild(rgi);
+                        rgi_cont = document.createElement("div");
+                        rgi_cont.setAttribute('class','rgi-content');
+
+                        title=document.createElement('h5');
+                        title.innerText=res[i];
+
+                        rgi_cont.appendChild(title);
+                        rgi_ex = document.createElement('div');
+                        rgi_ex.setAttribute('class','rgi-extra');
+                        rgi_star = document.createElement('div');
+                        rgi_star.setAttribute('class','rgi-star');
+
+                        star=document.createElement('img');
+                        star.setAttribute('src',"img/icons/star.png");
+                        rgi_star.appendChild(star);
+
+
+                        rgi_ex.appendChild(rgi_star);
+                        rgi_heart=document.createElement('div');
+                        rgi_heart.setAttribute('class','rgi-heart');
+
+                        heart=document.createElement('img');
+                        heart.setAttribute('src',"img/icons/heart.png");
+                        rgi_heart.appendChild(heart);
+
+                        rgi_ex.appendChild(rgi_heart);
+                        rgi_cont.appendChild(rgi_ex);
+                        
+
+                        rec.appendChild(rgi_cont);
+                        col.appendChild(rec);
+                        a.appendChild(col);
+                        }
+
+                    }
+
+                    }
+                    
+                }
+
+                //alert(res[0]);
+            }
+
+
+        
+
+    </script>
+
+</head>
+<body onload="obj.display()">
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header section -->
+    <header class="header-section">
+        <div class="container">
+            <!-- logo -->
+            <a class="site-logo" href="http://localhost:80/GameW/home.html">
+                <img src="img/logo.png" alt="">
+            </a>
+            <div class="user-panel">
+                <a href="http://localhost:80/GameW/login.php">Login</a>  /  <a href="http://localhost:80/GameW/signup.php">Register</a>
+            </div>
+            <div class="user-panel">
+                <a href="http://localhost:80/GameW/logout.php">Logout</a>
+            </div>
+            <!-- responsive -->
+            <div class="nav-switch">
+                <i class="fa fa-bars"></i>
+            </div>
+            <!-- site menu -->
+            <nav class="main-menu">
+                <ul>
+                    <li><a href="http://localhost:80/GameW/home.html">Home</a></li>
+                    <li><a href="http://localhost:80/GameW/review.html">Games</a></li>
+                    <li><a href="http://localhost:80/GameW/categories.html">Blog</a></li>
+                    <li><a href="http://localhost:9000">Forums</a></li>
+                    <li><a href="http://localhost:80/GameW/contact.html">Contact</a></li>
+                    <li><a href="http://localhost:8090">Recommendations</a></li>
+                    
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Header section end -->
+
+
+    <!-- Latest news section -->
+    
+    <!-- Latest news section end -->
+
+
+    <!-- Page info section -->
+    <section class="page-info-section set-bg" data-setbg="img/page-top-bg/1.jpg">
+        <div class="pi-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-6 text-white">
+                        <h2>Recommendations</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Page info section -->
+
+    <p id="recommendations" style="display: none;">{{ content }}</p>
+    <!-- Page section -->
+    <section class="page-section recent-game-page spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row" id="sub">
+                        
+                                         
+                        
+                        
+                        
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="footer-top-section">
+        <div class="container">
+            <div class="footer-top-bg">
+                <img src="img/footer-top-bg.png" alt="">
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-logo text-white">
+                        <img src="img/footer-logo.png" alt="">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit ame.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget mb-5 mb-md-0">
+                        <h4 class="fw-title">Latest Posts</h4>
+                        <div class="latest-blog">
+                            <div class="lb-item">
+                                <div class="lb-thumb set-bg" data-setbg="img/latest-blog/1.jpg"></div>
+                                <div class="lb-content">
+                                    <div class="lb-date">June 21, 2018</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum </p>
+                                    <a href="#" class="lb-author">By Admin</a>
+                                </div>
+                            </div>
+                            <div class="lb-item">
+                                <div class="lb-thumb set-bg" data-setbg="img/latest-blog/2.jpg"></div>
+                                <div class="lb-content">
+                                    <div class="lb-date">June 21, 2018</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum </p>
+                                    <a href="#" class="lb-author">By Admin</a>
+                                </div>
+                            </div>
+                            <div class="lb-item">
+                                <div class="lb-thumb set-bg" data-setbg="img/latest-blog/3.jpg"></div>
+                                <div class="lb-content">
+                                    <div class="lb-date">June 21, 2018</div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum </p>
+                                    <a href="#" class="lb-author">By Admin</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-widget">
+                        <h4 class="fw-title">Top Comments</h4>
+                        <div class="top-comment">
+                            <div class="tc-item">
+                                <div class="tc-thumb set-bg" data-setbg="img/authors/1.jpg"></div>
+                                <div class="tc-content">
+                                    <p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+                                    <div class="tc-date">June 21, 2018</div>
+                                </div>
+                            </div>
+                            <div class="tc-item">
+                                <div class="tc-thumb set-bg" data-setbg="img/authors/2.jpg"></div>
+                                <div class="tc-content">
+                                    <p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+                                    <div class="tc-date">June 21, 2018</div>
+                                </div>
+                            </div>
+                            <div class="tc-item">
+                                <div class="tc-thumb set-bg" data-setbg="img/authors/3.jpg"></div>
+                                <div class="tc-content">
+                                    <p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+                                    <div class="tc-date">June 21, 2018</div>
+                                </div>
+                            </div>
+                            <div class="tc-item">
+                                <div class="tc-thumb set-bg" data-setbg="img/authors/4.jpg"></div>
+                                <div class="tc-content">
+                                    <p><a href="#">James Smith</a> <span>on</span>  Lorem ipsum dolor sit amet, co</p>
+                                    <div class="tc-date">June 21, 2018</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer top section end -->
+
+    
+    <!-- Footer section -->
+    <footer class="footer-section">
+        <div class="container">
+            <ul class="footer-menu">
+                <li><a href="http://localhost:80/GameW/home.html">Home</a></li>
+                    <li><a href="http://localhost:80/GameW/review.html">Games</a></li>
+                    <li><a href="http://localhost:80/GameW/categories.html">Blog</a></li>
+                    <li><a href="http://localhost:9000">Forums</a></li>
+                    <li><a href="http://localhost:80/GameW/contact.html">Contact</a></li>
+                    <li><a href="http://localhost:8090">Recommendations</a></li>
+            </ul>
+           
+        </div>
+    </footer>
+    <!-- Footer section end -->
+
+
+    <!--====== Javascripts & Jquery ======-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.marquee.min.js"></script>
+    <script src="js/main.js"></script>
+    </body>
+</html>
