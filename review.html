@@ -36,11 +36,15 @@
 	<header class="header-section">
 		<div class="container">
 			<!-- logo -->
-			<a class="site-logo" href="index.html">
+			<a class="site-logo" href="home.html">
 				<img src="img/logo.png" alt="">
 			</a>
 			<div class="user-panel">
-				<a href="#">Login</a>  /  <a href="#">Register</a>
+				<a href="login.php">Login</a>  /  <a href="signup.php">Register</a>
+			</div>
+
+			<div class="user-panel">
+				<a href="logout.php">Logout</a>
 			</div>
 			<!-- responsive -->
 			<div class="nav-switch">
@@ -49,11 +53,12 @@
 			<!-- site menu -->
 			<nav class="main-menu">
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="home.html">Home</a></li>
 					<li><a href="review.html">Games</a></li>
 					<li><a href="categories.html">Blog</a></li>
-					<li><a href="community.html">Forums</a></li>
+					<li><a href="http://localhost:9000">Forums</a></li>
 					<li><a href="contact.html">Contact</a></li>
+					<li><a href="http://localhost:8090">Recommendations</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -88,7 +93,8 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="review-item">
-						<div class="review-cover set-bg" data-setbg="img/review/5.jpg">
+						<div class="review-cover set-bg">
+							<img src="img/review/5.jpg" loading="lazy">
 							<div class="score yellow">9.3</div>
 						</div>
 						<div class="review-text">
@@ -106,7 +112,8 @@
 				</div>
 				<div class="col-md-6">
 					<div class="review-item">
-						<div class="review-cover set-bg" data-setbg="img/review/6.jpg">
+						<div class="review-cover set-bg">
+							<img src="img/review/6.jpg">
 							<div class="score yellow">9.3</div>
 						</div>
 						<div class="review-text">
@@ -124,7 +131,8 @@
 				</div>
 				<div class="col-md-6">
 					<div class="review-item">
-						<div class="review-cover set-bg" data-setbg="img/review/7.jpg">
+						<div class="review-cover set-bg">
+							<img src="img/review/7.jpg">
 							<div class="score yellow">9.3</div>
 						</div>
 						<div class="review-text">
@@ -142,7 +150,8 @@
 				</div>
 				<div class="col-md-6">
 					<div class="review-item">
-						<div class="review-cover set-bg" data-setbg="img/review/8.jpg">
+						<div class="review-cover set-bg">
+							<img src="img/review/8.jpg">
 							<div class="score yellow">9.3</div>
 						</div>
 						<div class="review-text">
@@ -160,7 +169,8 @@
 				</div>
 				<div class="col-md-6">
 					<div class="review-item">
-						<div class="review-cover set-bg" data-setbg="img/review/9.jpg">
+						<div class="review-cover set-bg">
+							<img src="img/review/9.jpg" loading="lazy">
 							<div class="score yellow">9.3</div>
 						</div>
 						<div class="review-text">
@@ -178,7 +188,8 @@
 				</div>
 				<div class="col-md-6">
 					<div class="review-item">
-						<div class="review-cover set-bg" data-setbg="img/review/10.jpg">
+						<div class="review-cover set-bg">
+							<img src="img/review/10.jpg" loading="lazy">
 							<div class="score yellow">9.3</div>
 						</div>
 						<div class="review-text">
@@ -350,16 +361,21 @@
 	<footer class="footer-section">
 		<div class="container">
 			<ul class="footer-menu">
-				<li><a href="index.html">Home</a></li>
+				<li><a href="home.html">Home</a></li>
 				<li><a href="review.html">Games</a></li>
 				<li><a href="categories.html">Blog</a></li>
-				<li><a href="community.html">Forums</a></li>
+				<li><a href="http://localhost:9000">Forums</a></li>
 				<li><a href="contact.html">Contact</a></li>
+				<li><a href="http://localhost:8090">Recommendations</a></li>
 			</ul>
 			
 		</div>
 	</footer>
 	<!-- Footer section end -->
+	<script src="yall.min.js"></script>
+	<script>
+	  document.addEventListener("DOMContentLoaded", yall);
+	</script>
 
 
 	<!--====== Javascripts & Jquery ======-->

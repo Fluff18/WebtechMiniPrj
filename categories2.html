@@ -4,7 +4,7 @@
 <?php
 // Initialize the session
 session_start();
- 
+//console.log($_SESSION['username'])
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     header("location: login.php");
@@ -23,7 +23,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<!-- Google Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
 
-	<!-- Stylesheets -->
+	<!-- Stylesheets --> 
 	<link rel="stylesheet" href="css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="css/owl.carousel.css"/>
@@ -37,17 +37,128 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<![endif]-->
 
 </head>
+	<script type="text/javascript">
+		
+  
+		
+ 		
+ 		obj = {
+
+ 			xhr: null,
+ 			usn: null,
+ 			data: null,
+
+ 			getStudDetails: function()
+	{
+		this.usn = document.getElementById("username");
+		this.data = document.getElementById("Search1");
+		if(this.usn == null || this.usn.innerText == "" || this.data.value ==" ")
+		{
+			alert("Please Enter Something");
+			return;
+		}
+		//Else we make an XHR request to the server
+		this.xhr = new XMLHttpRequest();
+		
+		
+		//Let's create a form to send .. we don't want to 
+		// be building string data everytime
+		//form = new FormData();
+		//Not the same as document.getElementsByTagName("form");	
+		
+		//form.append("usn", this.usn.value);
+		//Add as many parameters as you want
+		
+		//Register handler
+		this.xhr.onreadystatechange = this.updateFields;
+		
+		//open a connection to the server. GET for now
+		this.xhr.open("GET", "http://localhost/GameW/save.php?usn=" + this.usn.innerText +"&data="+this.data.value,true);
+		
+		
+		//Make this a complex request by adding a custom header
+		this.xhr.setRequestHeader("abc","hello");
+		
+		//this.xhr.open("POST", "http://localhost/getstud.php",true);
+		
+		//If its post, we need to set a header fields
+		//this.xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	
+    	//Make the request
+		this.xhr.send();
+
+	},
+
+	updateFields: function()
+	{
+		//Assume fields are separated by semi-colon
+		
+		if(obj.xhr.readyState == 4 && obj.xhr.status == 200)
+		{
+			message = obj.xhr.responseText;
+			//message = obj.xhr.responseText;
+			
+			fields = message.split(";");
+			
+			document.getElementById("Search1").value = fields[0];
+			
+			
+		}
+	
+	},
+ 			sendData: function(event)
+	{
+		event.preventDefault(); // Prevent default submit of form
+		
+		//reset the xhr object, so that we can use it afresh
+		//obj.xhr.abort(); 
+		this.xhr = new XMLHttpRequest();
+		//FormData() constructor to create a form to submit
+		// With this, we don't need to setRequestHeader("Content-type");
+		newform = new FormData();
+		newform.append("usn",document.getElementById("username").innerText);
+		newform.append("data",document.getElementById("Search1").value);
+				
+		this.xhr.onreadystatechange = this.reportStat;
+		this.xhr.open("POST", "http://localhost/GameW/search.php", true);
+		
+		this.xhr.send(newform);
+	},
+		reportStat: function()
+	{
+		if(obj.xhr.readyState == 4 && obj.xhr.status == 200)
+		{
+
+			//alert("Success");
+			// Simulate an HTTP redirect:
+			window.location.replace("search.html");
+			//status = obj.xhr.responseText;
+			//div = document.createElement("div");
+			//div.innerHTML = status;
+			//document.body.appendChild(div);
+			//div.style.color = "blue";
+			//div.style.fontWeight = "bold";
+		}
+	}
+
+	}
+
+
+	</script>
 <body>
 	<!-- Page Preloder -->
+	
 	<div id="preloder">
 		<div class="loader"></div>
 	</div>
+
+
 
 	<!-- Header section -->
 	<header class="header-section">
 		<div class="container">
 			<!-- logo -->
-			<a class="site-logo" href="index.html">
+			<a class="site-logo" href="home.html">
 				<img src="img/logo.png" alt="">
 			</a>
 			<div class="user-panel">
@@ -56,6 +167,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 			<div class="user-panel">
 				<a href="logout.php">Logout</a>
 			</div>
+
+
 			<!-- responsive -->
 			<div class="nav-switch">
 				<i class="fa fa-bars"></i>
@@ -63,11 +176,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 			<!-- site menu -->
 			<nav class="main-menu">
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="home.html">Home</a></li>
 					<li><a href="review.html">Games</a></li>
 					<li><a href="categories.html">Blog</a></li>
-					<li><a href="community.html">Forums</a></li>
+					<li><a href="http://localhost:9000">Forums</a></li>
 					<li><a href="contact.html">Contact</a></li>
+					<li><a href="http://localhost:8090">Recommendations</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -87,7 +201,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 				<div class="row">
 					<div class="col-xl-5 col-lg-6 text-white">
 						<h2>Video Gallery</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum.</p>
+						<p>Lorem ipsum dolor sit amet, consectetur <p id="username"> <?php echo $_SESSION['username']; ?></p>adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum nulla dictum.</p>
+						
 					</div>
 				</div>
 			</div>
@@ -105,7 +220,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 						<div class="col-md-6">
 							<div class="recent-game-item">
 								<div class="rgi-thumb set-bg">
-									<iframe width="300" height="225" src="https://www.youtube.com/embed/edYCtaNueQY" frameborder="0" picture-in-picture"></iframe>
+									<iframe width="300" height="225" src="https://www.youtube.com/embed/edYCtaNueQY" frameborder="0" picture-in-picture class ="videoPlayer"></iframe>
 									<div class="cata new">racing</div>
 								</div>
 								<div class="rgi-content">
@@ -173,8 +288,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 						<div class="col-md-6">
 							<div class="recent-game-item">
 								<div class="rgi-thumb set-bg">
-									<iframe width="560" height="315" src="https://www.youtube.com/embed/vgQNOIhRsV4" frameborder="0" picture-in-picture"></iframe>
+									<iframe width="300" height="225" src="https://www.youtube.com/embed/hh9x4NqW0Dw" frameborder="0" picture-in-picture"></iframe>
 									<div class="cata racing">racing</div>
+								</div>
+								<div class="rgi-content">
+									<h5>Watch Dogs 2</h5>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit amet, consectetur elit. </p>
+									<a href="#" class="comment">3 Comments</a>
+									<div class="rgi-extra">
+										<div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
+										<div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="col-md-6">
+							<div class="recent-game-item">
+								<div class="rgi-thumb set-bg">
+									<iframe width="300" height="225" src="https://www.youtube.com/embed/vgQNOIhRsV4" frameborder="0" picture-in-picture"></iframe>
+									<div class="cata adventure">Adventure</div>
 								</div>
 								<div class="rgi-content">
 									<h5>FIFA 20</h5>
@@ -189,27 +321,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 						</div>
 						<div class="col-md-6">
 							<div class="recent-game-item">
-								<div class="rgi-thumb set-bg" data-setbg="img/recent-game/6.jpg">
-									<div class="cata adventure">Adventure</div>
-								</div>
-								<div class="rgi-content">
-									<h5>Susce pulvinar metus nulla, vel  facilisis sem </h5>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit amet, consectetur elit. </p>
-									<a href="#" class="comment">3 Comments</a>
-									<div class="rgi-extra">
-										<div class="rgi-star"><img src="img/icons/star.png" alt=""></div>
-										<div class="rgi-heart"><img src="img/icons/heart.png" alt=""></div>
-									</div>
-								</div>
-							</div>	
-						</div>
-						<div class="col-md-6">
-							<div class="recent-game-item">
-								<div class="rgi-thumb set-bg" data-setbg="img/recent-game/7.jpg">
+								<div class="rgi-thumb set-bg">
+									<iframe width="300" height="225" src="https://www.youtube.com/embed/FkklG9MA0vM" frameborder="0" picture-in-picture"></iframe>
 									<div class="cata new">racing</div>
 								</div>
 								<div class="rgi-content">
-									<h5>Suspendisse ut justo tem por, rutrum</h5>
+									<h5>Doom Eternal</h5>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit amet, consectetur elit. </p>
 									<a href="#" class="comment">3 Comments</a>
 									<div class="rgi-extra">
@@ -221,11 +338,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 						</div>
 						<div class="col-md-6">
 							<div class="recent-game-item">
-								<div class="rgi-thumb set-bg" data-setbg="img/recent-game/8.jpg">
+								<div class="rgi-thumb set-bg">
+									<iframe width="300" height="225" src="https://www.youtube.com/embed/0E44DClsX5Q" frameborder="0" picture-in-picture"></iframe>
 									<div class="cata racing">racing</div>
 								</div>
 								<div class="rgi-content">
-									<h5>Susce pulvinar metus nulla, vel  facilisis sem </h5>
+									<h5>Call of Duty Warzone</h5>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisc ing ipsum dolor sit amet, consectetur elit. </p>
 									<a href="#" class="comment">3 Comments</a>
 									<div class="rgi-extra">
@@ -238,7 +356,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 					</div>
 					<div class="site-pagination">
 						
-						<a href="categories.html">01.</a>
+						<a href="categories2.html">01.</a>
 						<span class="active">02.</span>
 						<a href="categories3.html">03.</a>
 					</div>
@@ -247,9 +365,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 				<div class="col-lg-4 col-md-7 sidebar pt-5 pt-lg-0">
 					<!-- widget -->
 					<div class="widget-item">
-						<form class="search-widget">
-							<input type="text" placeholder="Search">
-							<button><i class="fa fa-search"></i></button>
+
+						<form action="search.php" method="POST" onsubmit="obj.sendData(event)">
+							<input type="text" id="Search1">
+							<input type="submit" value="search"/>
+							<!--button onclick="obj.write(event)"><i class="fa fa-search"></i></button-->
 						</form>
 					</div>
 					<!-- widget -->
@@ -428,23 +548,21 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<footer class="footer-section">
 		<div class="container">
 			<ul class="footer-menu">
-				<li><a href="index.html">Home</a></li>
+				<li><a href="home.html">Home</a></li>
 				<li><a href="review.html">Games</a></li>
 				<li><a href="categories.html">Blog</a></li>
-				<li><a href="community.html">Forums</a></li>
+				<li><a href="http://localhost:9000">Forums</a></li>
 				<li><a href="contact.html">Contact</a></li>
+				<li><a href="http://localhost:8090">Recommendations</a></li>
 			</ul>
-			<p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</p>
+			
 		</div>
 	</footer>
 	<!-- Footer section end -->
 
 
 	<!--====== Javascripts & Jquery ======-->
-	<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/jquery.marquee.min.js"></script>
